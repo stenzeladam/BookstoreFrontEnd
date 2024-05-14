@@ -36,11 +36,11 @@ const HomePage = () => {
     }
 
     const ordersColumns = [
-        { field: 'order_id', headerName: 'Order ID: ', headerAlign: 'center', type: 'number', width: 100, align: 'center'},
-        { field: 'title', headerName: 'Title: ', headerAlign: 'left', width: 255 },
-        { field: 'author', headerName: 'Author: ', headerAlign: 'left', width: 150 },
-        { field: 'price', headerName: 'Price: ', headerAlign: 'center', type: 'number', width: 130, align: 'center' },
-        { field: 'quantity', headerName: 'Quantity', headerAlign: 'left', type: 'number', width: 160, align: 'left'},
+        { field: 'order_id', headerName: 'Order ID', headerAlign: 'center', type: 'number', width: 100, align: 'center'},
+        { field: 'title', headerName: 'Title', headerAlign: 'left', width: 255 },
+        { field: 'author', headerName: 'Author', headerAlign: 'left', width: 150 },
+        { field: 'price', headerName: 'Price', headerAlign: 'center', type: 'number', width: 130, align: 'center' },
+        { field: 'quantity', headerName: 'Quantity', headerAlign: 'left', type: 'number', width: 4600, align: 'left'},
       ];
 
     const ordersRows = orders.map(order => {
@@ -48,9 +48,9 @@ const HomePage = () => {
     });
 
     const customersColumns = [
-        { field: 'name', headerName: 'Name: ', width: 255 },
-        { field: 'email', headerName: 'E-mail: ', width: 255 },
-        { field: 'address', headerName: 'Address: ', width: 450 },
+        { field: 'name', headerName: 'Name', width: 255 },
+        { field: 'email', headerName: 'E-mail', width: 255 },
+        { field: 'address', headerName: 'Address', width: 4500 },
       ];
 
       const customersRows = customers.map(customer => {
@@ -75,29 +75,49 @@ const HomePage = () => {
 
     return (
         <div style={{ height: 400, width: '100%' }}>
-          <DataGrid
+            <style>
+            {`
+            .custom-header {
+                background-color: #000000; /* Set custom background color */
+                color: #ffffff; /* Set custom text color */
+            }
+
+            .custom-header .MuiDataGrid-colCellTitle {
+                color: #ff0000
+            }
+            `}
+        </style>
+        <DataGrid
             rows={ordersRows}
-            columns={ordersColumns}
+            columns={ordersColumns.map(column => ({
+            ...column,
+            headerClassName: 'custom-header', // Apply custom header class
+            }))}
             initialState={{
-              pagination: {
+            pagination: {
                 paginationModel: { page: 0, pageSize: 5 },
-              },
+            },
             }}
             pageSizeOptions={[5, 10]}
             checkboxSelection
-          />
-          <DataGrid
+        />
+        <DataGrid
             rows={customersRows}
-            columns={customersColumns}
+            columns={customersColumns.map(column => ({
+            ...column,
+            headerClassName: 'custom-header', // Apply custom header class
+            }))}
             initialState={{
-              pagination: {
+            pagination: {
                 paginationModel: { page: 0, pageSize: 5 },
-              },
+            },
             }}
             pageSizeOptions={[5, 10]}
             checkboxSelection
-          />
+        />
         </div>
+
+        
       );
 };
 
